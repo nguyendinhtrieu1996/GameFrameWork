@@ -49,3 +49,15 @@ public class LoopingAnimation {
         g.drawImage(frames[currentFrameIndex].getImage(), x, y, width, height);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+

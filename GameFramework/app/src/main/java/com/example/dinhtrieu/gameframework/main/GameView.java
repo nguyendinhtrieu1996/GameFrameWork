@@ -4,11 +4,10 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
-import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import com.example.dinhtrieu.gameframework.state.LoadMenuState;
+import com.example.dinhtrieu.gameframework.state.MenuState;
 import com.example.dinhtrieu.gameframework.state.State;
 import com.example.dinhtrieu.gameframework.util.InputHandler;
 import com.example.dinhtrieu.gameframework.util.Painter;
@@ -42,7 +41,7 @@ public class GameView extends SurfaceView implements Runnable {
             public void surfaceCreated(SurfaceHolder holder) {
                 initInput();
                 if(currentState == null) {
-                    setCurrentState(new LoadMenuState());
+                    setCurrentState(new MenuState());
                 }
                 initGame();
             }
@@ -81,10 +80,10 @@ public class GameView extends SurfaceView implements Runnable {
     public void run() {
         long updateDurationMillis = 0;
         long sleepDurationMillis = 0;
-        Log.d(TAG, "running");
 
         //Game loop
         while(running) {
+
             long beforeUpdateRender = System.nanoTime();
             long deltaMillis = sleepDurationMillis + updateDurationMillis;
             updateAndRender(deltaMillis);

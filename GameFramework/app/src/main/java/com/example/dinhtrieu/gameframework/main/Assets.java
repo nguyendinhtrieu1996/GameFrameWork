@@ -24,6 +24,7 @@ public class Assets {
     private static SoundPool soundPool;
 
     public static Bitmap menuBackground;
+    public static Bitmap gamebackground;
 
     public static void onPause() {
         if(soundPool != null) {
@@ -160,3 +161,17 @@ public class Assets {
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
