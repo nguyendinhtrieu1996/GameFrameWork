@@ -14,6 +14,8 @@ import android.media.SoundPool;
 import android.graphics.BitmapFactory.Options;
 import android.os.Build;
 
+import com.example.dinhtrieu.gameframework.animation.LoopingAnimation;
+
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -25,6 +27,11 @@ public class Assets {
 
     public static Bitmap menuBackground;
     public static Bitmap gamebackground;
+    public static LoopingAnimation animation;
+
+    public static void loadResource() {
+
+    }
 
     public static void onPause() {
         if(soundPool != null) {

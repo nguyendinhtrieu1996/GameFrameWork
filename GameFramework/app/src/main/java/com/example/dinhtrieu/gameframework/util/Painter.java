@@ -105,5 +105,31 @@ public class Painter {
         canvas.drawBitmap(bitmap, srcRect, dstRect, paint);
     }
 
+    //GET
+
+
+    public Canvas getCanvas() {
+        return canvas;
+    }
+
+    public Paint getPaint() {
+        return paint;
+    }
+
+    public Rect getSrcRect() {
+        return srcRect;
+    }
+
+    public Rect getDstRect() {
+        return dstRect;
+    }
+
+    public RectF getDstRectF() {
+        return dstRectF;
+    }
+
+    public Picture getPicture() {
+        return picture;
+    }
 }
 
