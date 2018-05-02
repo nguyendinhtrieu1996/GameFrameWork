@@ -5,6 +5,7 @@ import android.graphics.Matrix;
 import android.util.Log;
 
 import com.example.dinhtrieu.gameframework.main.Assets;
+import com.example.dinhtrieu.gameframework.main.GameView;
 
 public class GameBackground {
 
@@ -14,7 +15,7 @@ public class GameBackground {
     private int width;
     private int height;
     private boolean reversedFirst;
-    public static final float speed = 25;
+    public static final float speed = 1200;
 
     private int xClip;
 
@@ -39,8 +40,8 @@ public class GameBackground {
         backgroundReversed = Bitmap.createBitmap(background, 0, 0, width, height, matrix, true);
     }
 
-    public void update(double fps){
-        xClip -= speed;
+    public void update(double delta){
+        xClip -= speed / GameView.FPS;
 
         if (xClip >= width) {
             xClip = 0;

@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.example.dinhtrieu.gameframework.main.Assets;
 import com.example.dinhtrieu.gameframework.main.GameMainActivity;
+import com.example.dinhtrieu.gameframework.main.GameView;
 import com.example.dinhtrieu.gameframework.util.Painter;
 import com.example.dinhtrieu.gameframework.util.RandomNumberGenerator;
 
@@ -17,26 +18,28 @@ public class Cactus {
     private int speed;
     private Bitmap cactus;
     private static int last = GameMainActivity.GAME_WIDTH;
+    private boolean isPassed;
 
     private Rect rect;
 
     public Cactus(float y, int width, int height) {
-        speed = 25;
+        isPassed = false;
+        speed = 1200;
         this.y = y;
         this.width = width;
         this.height = height;
-        this.x = GameMainActivity.GAME_WIDTH + RandomNumberGenerator.getRandIntBetween(0, 1000);
+        this.x = GameMainActivity.GAME_WIDTH + RandomNumberGenerator.getRandInt(1920);
 
         this.rect = new Rect((int)x, (int)y, (int)x + width, (int)y + height);
         this.cactus = Assets.cactus;
     }
 
     public void update(float delta) {
-        x -= speed;
+        x -= speed / GameView.FPS;
 
         if (x < -width) {
-            this.x = GameMainActivity.GAME_WIDTH + RandomNumberGenerator.getRandIntBetween(0, 1000);
-            Log.d("Cactus", x + "");
+            this.x = GameMainActivity.GAME_WIDTH + RandomNumberGenerator.getRandInt(1920);
+            isPassed = false;
         }
 
         updateRect();
@@ -50,7 +53,33 @@ public class Cactus {
         g.drawImage(cactus, (int)x, (int)y, width, height);
     }
 
+    //GET SET
+
+    public boolean isPassed() {
+        return isPassed;
+    }
+
+    public void setPassed(boolean passed) {
+        isPassed = passed;
+    }
+
+    public Rect getRect() {
+        return new Rect(rect.left + 35, rect.top + 30, rect.right - 40, rect.bottom);
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

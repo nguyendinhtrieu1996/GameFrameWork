@@ -2,6 +2,7 @@ package com.example.dinhtrieu.gameframework.state;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.nfc.Tag;
 import android.util.Log;
 import android.view.MotionEvent;
 
@@ -12,20 +13,27 @@ import com.example.dinhtrieu.gameframework.model.GameBackground;
 import com.example.dinhtrieu.gameframework.model.Player;
 import com.example.dinhtrieu.gameframework.util.Painter;
 import com.example.dinhtrieu.gameframework.util.UIButton;
+import com.example.dinhtrieu.gameframework.util.UILabel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PlayState extends State {
 
+    private static final String TAG = "PlayState";
+
     private GameBackground gameBackground;
-    private long fps = 60;
     private Player player;
     private List<Cactus> cactusList;
+    private UILabel labelScore;
+    private int score;
+    private boolean isGameOver;
 
     @Override
     public void init() {
-        load();
+        isGameOver = false;
+        score = 0;
+        labelScore = new UILabel("0", GameMainActivity.GAME_WIDTH / 2 - 6, 150);
         gameBackground = new GameBackground(GameMainActivity.GAME_WIDTH, GameMainActivity.GAME_HEIGHT);
         player = new Player(40, 760, 180, 180);
 
@@ -39,13 +47,19 @@ public class PlayState extends State {
 
     @Override
     public void update(float delta) {
-        fps = (long)(1 / delta);
-        gameBackground.update(fps);
+        gameBackground.update(delta);
         Assets.animation.update(delta);
         player.update(delta);
 
         for (Cactus cactus : cactusList) {
             cactus.update(delta);
+        }
+
+        checkGameOver();
+
+        if (!isGameOver) {
+            updateScore();
+            labelScore.setText(score + "");
         }
     }
 
@@ -58,6 +72,7 @@ public class PlayState extends State {
         }
 
         Assets.animation.render(g, (int)player.getX(), (int) player.getY());
+        labelScore.render(g);
     }
 
     @Override
@@ -67,6 +82,7 @@ public class PlayState extends State {
     @Override
     public boolean onTouch(MotionEvent e, int scaledX, int scaledY) {
         player.onTouch(e, scaledX, scaledY);
+        Assets.playSound(Assets.pointSoundId);
         return false;
     }
 
@@ -86,6 +102,29 @@ public class PlayState extends State {
         } else {
             g.getCanvas().drawBitmap(gameBackground.getBackground(), fromRect2, toRect2, g.getPaint());
             g.getCanvas().drawBitmap(gameBackground.getBackgroundReversed(), fromRect1, toRect1, g.getPaint());
+        }
+    }
+
+    private void updateScore() {
+        for (int i = 0; i < cactusList.size(); ++i) {
+            int cactusX = cactusList.get(i).getRect().right;
+            int playerX = player.getRect().left;
+
+            if (cactusX <  playerX && !cactusList.get(i).isPassed()) {
+                cactusList.get(i).setPassed(true);
+                score++;
+                Assets.playSound(Assets.wingSoundId);
+            }
+        }
+    }
+
+    private void checkGameOver() {
+        for (Cactus cactus : cactusList) {
+            if (player.getRect().intersect(cactus.getRect())) {
+                isGameOver = true;
+                setCurrentState(new GameOverState(score));
+                Assets.playSound(Assets.hitSoundId);
+            }
         }
     }
 

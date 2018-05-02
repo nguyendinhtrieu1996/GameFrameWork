@@ -29,6 +29,8 @@ public class GameView extends SurfaceView implements Runnable {
 
     private InputHandler inputHandler;
 
+    public static final int FPS = 60;
+
     public GameView(Context context, int gameWidth, int gameHeight) {
         super(context);
         gameImage = Bitmap.createBitmap(gameWidth, gameHeight, Bitmap.Config.RGB_565);

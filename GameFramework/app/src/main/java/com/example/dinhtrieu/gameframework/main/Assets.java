@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Picture;
+import android.graphics.Typeface;
 import android.graphics.drawable.PictureDrawable;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
@@ -29,13 +30,27 @@ public class Assets {
 
     private static SoundPool soundPool;
 
-    public static Bitmap menuBackground, gamebackground, cactus;
+    public static Bitmap menuBackground, gamebackground, gameoverbackground, cactus, continueButton, exitButton;
     public static LoopingAnimation animation;
+
+    public static int hitSoundId = -1, wingSoundId = -1, pointSoundId = -1;
+
+    public static Typeface typeface;
 
     public static void load() {
         gamebackground = Assets.loadBitmap("gamebackground.jpg", true);
         menuBackground = Assets.loadBitmap("menubackground.jpg", true);
         cactus = Assets.loadBitmap("cactus.png", true);
+        gameoverbackground = Assets.loadBitmap("gameover_bg.png", true);
+        continueButton = Assets.loadBitmap("continue_button.png", true);
+        exitButton = Assets.loadBitmap("quit_button.png", true);
+
+        typeface = Typeface.create( Typeface.createFromAsset(GameMainActivity.assets, "fonts/pixel.TTF"), Typeface.BOLD);
+
+        soundPool = buildSoundPool();
+        hitSoundId = loadSound("sounds/Hit.mp3");
+        wingSoundId = loadSound("sounds/Wing.mp3");
+        pointSoundId = loadSound("sounds/Point.mp3");
 
         //Loaf sprite map and initial animaton
         List<Bitmap> bitmaps = loadListBitmap("sprite_map.png", true, 13);
@@ -63,6 +78,7 @@ public class Assets {
     }
 
     public static void onResume() {
+
     }
 
     //used for loading Bitmap Images
@@ -193,6 +209,7 @@ public class Assets {
             e.printStackTrace();
         }
     }
+
 }
 
 

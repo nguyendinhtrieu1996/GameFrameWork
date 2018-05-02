@@ -91,8 +91,9 @@ public class Player {
     }
 
     public Rect getRect() {
-        return rect;
+        return new Rect(rect.left + 40, rect.top + 30, rect.right - 35, rect.bottom - 35);
     }
+
 }
 
 
