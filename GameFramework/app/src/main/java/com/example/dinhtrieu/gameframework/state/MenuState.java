@@ -38,7 +38,7 @@ public class MenuState extends State {
 
     @Override
     public void load() {
-        Assets.menuBackground = Assets.loadBitmap("menubackground.jpg", true);
+
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.graphics.Rect;
 import android.util.Log;
 
 public class UIButton {
+
     private static final String TAG = "UIButton";
     private Rect buttonRect;
     private boolean buttonDown;
@@ -19,7 +20,6 @@ public class UIButton {
 
     public UIButton(int left, int top, int right, int bottom, Bitmap buttonImage) {
         buttonRect = new Rect(left, top, right, bottom);
-        Log.d(TAG, " left" + buttonRect.left + " top " + buttonRect.top + " width " + buttonRect.width() + " height " + buttonRect.height());
         this.buttonImage = buttonImage;
     }
 

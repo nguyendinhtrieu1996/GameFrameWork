@@ -13,11 +13,15 @@ import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.graphics.BitmapFactory.Options;
 import android.os.Build;
+import android.util.Log;
 
+import com.example.dinhtrieu.gameframework.animation.Frame;
 import com.example.dinhtrieu.gameframework.animation.LoopingAnimation;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Assets {
 
@@ -29,7 +33,19 @@ public class Assets {
     public static Bitmap gamebackground;
     public static LoopingAnimation animation;
 
-    public static void loadResource() {
+    public static void load() {
+        gamebackground = Assets.loadBitmap("gamebackground.png", true);
+        menuBackground = Assets.loadBitmap("menubackground.jpg", true);
+
+        List<Bitmap> bitmaps = loadListBitmap("sprite_map.png", true, 13);
+        List<Frame> frames = new ArrayList<>();
+
+        for (int i = 0; i < bitmaps.size(); ++i) {
+            Frame frame = new Frame(bitmaps.get(i), 0.05);
+            frames.add(frame);
+        }
+
+        animation = new LoopingAnimation(true, frames);
 
     }
 
@@ -46,7 +62,6 @@ public class Assets {
     }
 
     public static void onResume() {
-
     }
 
     //used for loading Bitmap Images
@@ -67,6 +82,38 @@ public class Assets {
         Bitmap bitmap = BitmapFactory.decodeStream(inputStream, null,
                 options);
         return bitmap;
+    }
+
+    public static List<Bitmap> loadListBitmap(String filename, boolean transparency, int qty) {
+        InputStream inputStream = null;
+        try {
+            inputStream = GameMainActivity.assets.open(filename);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Options options = new Options();
+        //  options.inDither = true;
+        if (transparency) {
+            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+        } else {
+            options.inPreferredConfig = Bitmap.Config.RGB_565;
+        }
+        Bitmap bitmap = BitmapFactory.decodeStream(inputStream, null, options);
+
+        int width = bitmap.getWidth() / qty;
+        int height = bitmap.getHeight();
+
+        int x = 0;
+        Bitmap cropBitmap;
+        List<Bitmap> bitmaps = new ArrayList<>();
+
+        for (int i = 0; i < qty; ++i) {
+            cropBitmap = Bitmap.createBitmap(bitmap, x, 0, width, height);
+            bitmaps.add(cropBitmap);
+            x += width;
+        }
+
+        return bitmaps;
     }
 
     //unloads the bitmap and clears up memory
@@ -111,28 +158,6 @@ public class Assets {
         }
         return soundPool;
     }
-
-
-    //load vector Images. This makes them into a Bitmap object and you
-    //will need to use the method drawImage
-//    public static Bitmap loadVectorImage(String filename, int width, int height) {
-//        Picture picture = null;
-//        PictureDrawable pictureDrawable = null;
-//        Bitmap b;
-//        try {
-//            picture = SVG.getFromAsset(GameMainActivity.assets, filename).renderToPicture(width, height);
-//        } catch (SVGParseException | IOException e) {
-//            e.printStackTrace();
-//        }
-//        pictureDrawable = new PictureDrawable(picture);
-//        b = pictureDrawableToBitmap(pictureDrawable);
-//        return b;
-//    }
-
-    //unloads vector images i think. there is no way to .recyle() them...
-//    public static void unloadVectorImage(SVG svg) {
-//        svg = null;
-//    }
 
     //converts a PictureDrawable to a Bitmap because hardware acceleration does
     //not support drawing Drawables or Pictures

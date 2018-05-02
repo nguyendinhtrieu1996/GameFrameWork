@@ -8,6 +8,7 @@ import android.view.MotionEvent;
 import com.example.dinhtrieu.gameframework.main.Assets;
 import com.example.dinhtrieu.gameframework.main.GameMainActivity;
 import com.example.dinhtrieu.gameframework.model.GameBackground;
+import com.example.dinhtrieu.gameframework.model.Player;
 import com.example.dinhtrieu.gameframework.util.Painter;
 import com.example.dinhtrieu.gameframework.util.UIButton;
 
@@ -15,32 +16,37 @@ public class PlayState extends State {
 
     private GameBackground gameBackground;
     private long fps = 60;
+    private Player player;
 
     @Override
     public void init() {
         load();
-        gameBackground = new GameBackground(GameMainActivity.GAME_WIDTH, GameMainActivity.GAME_HEIGHT, 60);
+        gameBackground = new GameBackground(GameMainActivity.GAME_WIDTH, GameMainActivity.GAME_HEIGHT);
+        player = new Player(40, 850, 180, 180);
     }
 
     @Override
     public void update(float delta) {
         fps = (long)(1 / delta);
         gameBackground.update(fps);
+        Assets.animation.update(delta);
+        player.update(delta);
     }
 
     @Override
     public void render(Painter g) {
         drawBackground(g);
+        Assets.animation.render(g, (int)player.getX(), (int) player.getY());
     }
 
     @Override
     public void load() {
-        Assets.gamebackground = Assets.loadBitmap("gamebackground.png", true);
     }
 
     @Override
     public boolean onTouch(MotionEvent e, int scaledX, int scaledY) {
-        return false; //This needs to be set to true if there is touch input
+        player.onTouch(e, scaledX, scaledY);
+        return false;
     }
 
     //Feature

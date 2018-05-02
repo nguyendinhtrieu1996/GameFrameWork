@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.example.dinhtrieu.gameframework.state.LoadState;
 import com.example.dinhtrieu.gameframework.state.MenuState;
 import com.example.dinhtrieu.gameframework.state.State;
 import com.example.dinhtrieu.gameframework.util.InputHandler;
@@ -42,7 +43,7 @@ public class GameView extends SurfaceView implements Runnable {
             public void surfaceCreated(SurfaceHolder holder) {
                 initInput();
                 if(currentState == null) {
-                    setCurrentState(new MenuState());
+                    setCurrentState(new LoadState());
                 }
                 initGame();
             }

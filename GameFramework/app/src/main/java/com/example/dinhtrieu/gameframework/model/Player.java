@@ -1,15 +1,16 @@
 package com.example.dinhtrieu.gameframework.model;
 
 import android.graphics.Rect;
+import android.view.MotionEvent;
 
 public class Player {
     private float x, y;
     private int width, height, velY;
-    private Rect rect, duckRect, ground;
+    private Rect rect;
+    private float yGround;
 
     private boolean isAlive;
     private boolean isDucked;
-    private float duckDuration;
 
     private static final int JUMP_VELOCITY = -600;
     private static final int ACCEL_GRAVITY = 1800;
@@ -20,30 +21,29 @@ public class Player {
         this.width = width;
         this.height = height;
 
-        ground = new Rect(0, 405, 0 + 800, 405 + 45);
-        rect = new Rect();
-        duckRect = new Rect();
-        isAlive = true;
         isDucked = false;
+        isAlive = true;
+
+        rect = new Rect((int) x, (int) y, (int) (x + width), (int) (y + height));
+        yGround = y + height;
     }
 
     public void update(float delta) {
-        if (duckDuration > 0 && isDucked) {
-            duckDuration -= delta;
-        } else {
-            isDucked = false;
-            duckDuration = .9f;
-        }
-
-        if (!isGrounded()) {
-            velY += ACCEL_GRAVITY * delta;
-        } else {
-            y = 406 - height;
+        if (isGrounded()) {
             velY = 0;
+        } else {
+            velY += ACCEL_GRAVITY * delta;
         }
 
         y += velY * delta;
-//        updateRects();
+        updateRect();
+    }
+
+    public void jump() {
+        if (isGrounded()) {
+            y -= 220;
+            velY = JUMP_VELOCITY;
+        }
     }
 
     public void duck() {
@@ -54,7 +54,6 @@ public class Player {
 
     public void pushBack(int dx) {
         x -= dx;
-        //Play sound
 
         if (x < width / 2) {
             isAlive = false;
@@ -62,8 +61,21 @@ public class Player {
         }
     }
 
+    public void onTouch(MotionEvent e, int scaledX, int scaledY) {
+        if (e.getAction() == MotionEvent.ACTION_DOWN) {
+            jump();
+        }
+    }
+
+    public void updateRect() {
+        rect.set((int) x, (int) y, (int) x + width, (int) y + height);
+    }
+
     public boolean isGrounded() {
-        return Rect.intersects(rect, ground);
+        if (rect.top + rect.height() >= yGround) {
+            return true;
+        }
+        return false;
     }
 
     public boolean isDucked() {
@@ -74,4 +86,27 @@ public class Player {
         return x;
     }
 
+    public float getY() {
+        return y;
+    }
+
+    public Rect getRect() {
+        return rect;
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -14,16 +14,15 @@ public class GameBackground {
     private int width;
     private int height;
     private boolean reversedFirst;
-    private float speed;
+    public static final float speed = 100;
 
     private int xClip;
 
-    public GameBackground(int screenWidth, int screenHeight, float s){
+    public GameBackground(int screenWidth, int screenHeight){
         background = Assets.gamebackground;
         reversedFirst = false;
 
         xClip = 0;
-        speed = s;
 
         // Create the bitmap
         background = Bitmap.createScaledBitmap(background, screenWidth,
@@ -83,3 +82,15 @@ public class GameBackground {
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
