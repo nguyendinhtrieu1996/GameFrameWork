@@ -14,7 +14,7 @@ public class GameBackground {
     private int width;
     private int height;
     private boolean reversedFirst;
-    public static final float speed = 100;
+    public static final float speed = 25;
 
     private int xClip;
 
@@ -40,7 +40,7 @@ public class GameBackground {
     }
 
     public void update(double fps){
-        xClip -= speed / fps;
+        xClip -= speed;
 
         if (xClip >= width) {
             xClip = 0;

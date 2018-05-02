@@ -41,7 +41,7 @@ public class Player {
 
     public void jump() {
         if (isGrounded()) {
-            y -= 220;
+            y -= 300;
             velY = JUMP_VELOCITY;
         }
     }

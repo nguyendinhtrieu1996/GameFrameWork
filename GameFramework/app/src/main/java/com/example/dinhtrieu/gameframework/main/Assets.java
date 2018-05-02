@@ -29,14 +29,15 @@ public class Assets {
 
     private static SoundPool soundPool;
 
-    public static Bitmap menuBackground;
-    public static Bitmap gamebackground;
+    public static Bitmap menuBackground, gamebackground, cactus;
     public static LoopingAnimation animation;
 
     public static void load() {
-        gamebackground = Assets.loadBitmap("gamebackground.png", true);
+        gamebackground = Assets.loadBitmap("gamebackground.jpg", true);
         menuBackground = Assets.loadBitmap("menubackground.jpg", true);
+        cactus = Assets.loadBitmap("cactus.png", true);
 
+        //Loaf sprite map and initial animaton
         List<Bitmap> bitmaps = loadListBitmap("sprite_map.png", true, 13);
         List<Frame> frames = new ArrayList<>();
 
