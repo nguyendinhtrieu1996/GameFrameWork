@@ -18,9 +18,6 @@ public class GameMainActivity extends Activity {
     public static final int GAME_HEIGHT = 1080;
     public static GameView sGame;
     public static AssetManager assets;
-    private static SharedPreferences prefs;
-    private static final String highScoreKey = "highScoreKey";
-    private static int highScore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +25,6 @@ public class GameMainActivity extends Activity {
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
-        prefs = getPreferences(Activity.MODE_PRIVATE);
-        highScore = retrieveHighScore();
         assets = getAssets();
         sGame = new GameView(this, GAME_WIDTH, GAME_HEIGHT);
         setContentView(sGame);
@@ -48,18 +43,9 @@ public class GameMainActivity extends Activity {
         sGame.onPause();
     }
 
-    public static void setHighScore(int highScore) {
-        GameMainActivity.highScore = highScore;
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putInt(highScoreKey, highScore);
-        editor.commit();
+    public static void saveHighScore(int highscore) {
+
     }
 
-    private int retrieveHighScore() {
-        return prefs.getInt(highScoreKey, 0);
-    }
 
-    public static int getHighScore() {
-        return highScore;
-    }
 }

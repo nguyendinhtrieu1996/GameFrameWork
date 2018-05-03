@@ -13,14 +13,20 @@ public class GameOverState extends State {
     private int playerScore;
     private UIButton continueButton;
     private UIButton exitButton;
+    private UIButton savescoreButton;
     private UILabel labelScore;
 
     public GameOverState(int playerScore) {
         this.playerScore = playerScore;
-        labelScore = new UILabel( playerScore + " score", GameMainActivity.GAME_WIDTH / 2, 550);
+        labelScore = new UILabel( playerScore + " score", GameMainActivity.GAME_WIDTH / 2, 480);
         labelScore.setSize(130);
-        this.continueButton = new UIButton(700, 650, 950, 730, Assets.continueButton);
-        this.exitButton = new UIButton(1020, 650, 1270, 730, Assets.quitButton);
+        this.continueButton = new UIButton(700, 530, 950, 630, Assets.continueButton);
+        this.exitButton = new UIButton(1020, 530, 1270, 630, Assets.quitButton);
+        this.savescoreButton = new UIButton((GameMainActivity.GAME_WIDTH - 250) / 2,
+                                            650,
+                                            (GameMainActivity.GAME_WIDTH - 250) / 2 + 250,
+                                            750,
+                                            Assets.savebutton);
     }
 
     @Override
@@ -38,6 +44,7 @@ public class GameOverState extends State {
         g.drawImage(Assets.gameoverbackground, 500, 100, 962, 746);
         continueButton.render(g, false);
         exitButton.render(g, false);
+        savescoreButton.render(g, false);
         labelScore.render(g);
     }
 
@@ -46,6 +53,7 @@ public class GameOverState extends State {
         if (e.getAction() == MotionEvent.ACTION_DOWN) {
             continueButton.onTouchDown(scaledX, scaledY);
             exitButton.onTouchDown(scaledX, scaledY);
+            savescoreButton.onTouchDown(scaledX, scaledY);
         }
 
         if (e.getAction() == MotionEvent.ACTION_UP) {
@@ -54,6 +62,10 @@ public class GameOverState extends State {
                 setCurrentState(new PlayState());
             } else if (exitButton.isPressed(scaledX, scaledY)) {
                 exitButton.cancel();
+                setCurrentState(new MenuState());
+            } else if (savescoreButton.isPressed(scaledX, scaledY)) {
+                GameMainActivity.saveHighScore(playerScore);
+                savescoreButton.cancel();
                 setCurrentState(new MenuState());
             }
         }

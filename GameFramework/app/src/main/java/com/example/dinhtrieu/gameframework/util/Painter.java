@@ -37,7 +37,8 @@ public class Painter {
     }
 
     //draws a string at the specified location
-    public void drawString(String str, int x, int y) {
+    public void drawString(String str, int x, int y, float textsize) {
+        paint.setTextSize(textsize);
         paint.setStyle(Paint.Style.FILL);
         canvas.drawText(str, x, y, paint);
     }

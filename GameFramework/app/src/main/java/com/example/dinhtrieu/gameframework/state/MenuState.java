@@ -17,7 +17,7 @@ public class MenuState extends State {
 
     @Override
     public void init() {
-        playButton = new UIButton(800, 300, 1100, 420, Assets.newButton);
+        playButton = new UIButton(800, 300, 1100, 420, Assets.playButton);
 
         Bitmap scoreButtonImage = Assets.loadBitmap("score_button.png", true);
         scoreButton = new UIButton(800, 450, 1100, 570, scoreButtonImage);

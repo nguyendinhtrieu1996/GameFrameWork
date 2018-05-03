@@ -30,8 +30,9 @@ public class Assets {
 
     private static SoundPool soundPool;
 
-    public static Bitmap menuBackground, gamebackground, gameloadingbackground, gameoverbackground, cactus, menuboard;
-    public static Bitmap continueButton, quitButton, pauseButton, pauseTouchButton, newButton, exitButton, resumeButton, restartButton;
+    public static Bitmap menuBackground, gamebackground, gameloadingbackground, gameoverbackground, cactus, menuboard, winMenuboard;
+    public static Bitmap continueButton, quitButton, pauseButton, pauseTouchButton, playButton, exitButton, resumeButton,
+            restartButton, newgamebutton, savescorebutton, savebutton;
     public static LoopingAnimation animation;
 
     public static int hitSoundId = -1, wingSoundId = -1, pointSoundId = -1;
@@ -45,8 +46,9 @@ public class Assets {
         cactus = Assets.loadBitmap("cactus.png", true);
         gameoverbackground = Assets.loadBitmap("gameover_bg.png", true);
         menuboard = Assets.loadBitmap("menu.png", true);
+        winMenuboard = Assets.loadBitmap("win_menu.png", true);
 
-        newButton = Assets.loadBitmap("new_button.png", true);
+        playButton = Assets.loadBitmap("play_button.png", true);
         continueButton = Assets.loadBitmap("continue_button.png", true);
         quitButton = Assets.loadBitmap("quit_button.png", true);
         pauseButton = Assets.loadBitmap("pause.png", true);
@@ -54,6 +56,9 @@ public class Assets {
         exitButton = Assets.loadBitmap("exit_button.png", true);
         restartButton = Assets.loadBitmap("restart_button.png", true);
         resumeButton = Assets.loadBitmap("resum_button.png", true);
+        newgamebutton = Assets.loadBitmap("new_game_button.png", true);
+        savescorebutton = Assets.loadBitmap("save_score_button.png", true);
+        savebutton = Assets.loadBitmap("save_button.png", true);
 
 
         typeface = Typeface.create( Typeface.createFromAsset(GameMainActivity.assets, "fonts/pixel.TTF"), Typeface.BOLD);

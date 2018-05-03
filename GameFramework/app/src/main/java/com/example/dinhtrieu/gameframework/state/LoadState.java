@@ -35,7 +35,7 @@ public class LoadState extends State {
 
     @Override
     public void unload() {
-        Assets.unloadBitmap(Assets.menuBackground);
+
     }
 }
 
