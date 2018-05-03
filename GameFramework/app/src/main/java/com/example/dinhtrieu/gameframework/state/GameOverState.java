@@ -20,7 +20,7 @@ public class GameOverState extends State {
         labelScore = new UILabel( playerScore + " score", GameMainActivity.GAME_WIDTH / 2, 550);
         labelScore.setSize(130);
         this.continueButton = new UIButton(700, 650, 950, 730, Assets.continueButton);
-        this.exitButton = new UIButton(1020, 650, 1270, 730, Assets.exitButton);
+        this.exitButton = new UIButton(1020, 650, 1270, 730, Assets.quitButton);
     }
 
     @Override

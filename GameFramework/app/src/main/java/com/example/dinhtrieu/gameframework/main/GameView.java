@@ -10,6 +10,7 @@ import android.view.SurfaceView;
 
 import com.example.dinhtrieu.gameframework.state.LoadState;
 import com.example.dinhtrieu.gameframework.state.MenuState;
+import com.example.dinhtrieu.gameframework.state.PauseState;
 import com.example.dinhtrieu.gameframework.state.State;
 import com.example.dinhtrieu.gameframework.util.InputHandler;
 import com.example.dinhtrieu.gameframework.util.Painter;
@@ -26,6 +27,7 @@ public class GameView extends SurfaceView implements Runnable {
     private Thread gameThread;
     private volatile boolean running = false;
     private volatile State currentState;
+    private volatile State preState = null;
 
     private InputHandler inputHandler;
 
@@ -64,6 +66,23 @@ public class GameView extends SurfaceView implements Runnable {
 
     public GameView(Context context) {
         super(context);
+    }
+
+    //PAUSE AND RESUME GAME
+    public void setPause() {
+        System.gc();
+        PauseState pauseState = new PauseState();
+        pauseState.init();
+        preState = currentState;
+        currentState = pauseState;
+        inputHandler.setCurrentState(currentState);
+    }
+
+    public void setResume() {
+        if (preState != null) {
+            currentState = preState;
+            inputHandler.setCurrentState(currentState);
+        }
     }
 
     public void setCurrentState(State newState) {

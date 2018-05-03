@@ -19,16 +19,19 @@ public class Cactus {
     private Bitmap cactus;
     private static int last = GameMainActivity.GAME_WIDTH;
     private boolean isPassed;
+    private int index;
 
     private Rect rect;
 
-    public Cactus(float y, int width, int height) {
+    public Cactus(float y, int width, int height, int index) {
+        this.index = index;
         isPassed = false;
-        speed = 1200;
+        speed = 1600;
         this.y = y;
         this.width = width;
         this.height = height;
-        this.x = GameMainActivity.GAME_WIDTH + RandomNumberGenerator.getRandInt(1920);
+        int gameW = GameMainActivity.GAME_WIDTH;
+        this.x = gameW + RandomNumberGenerator.getRandIntBetween(index * gameW / 3, (index + 1) * gameW / 3);
 
         this.rect = new Rect((int)x, (int)y, (int)x + width, (int)y + height);
         this.cactus = Assets.cactus;
@@ -38,7 +41,8 @@ public class Cactus {
         x -= speed / GameView.FPS;
 
         if (x < -width) {
-            this.x = GameMainActivity.GAME_WIDTH + RandomNumberGenerator.getRandInt(1920);
+            int gameW = GameMainActivity.GAME_WIDTH;
+            this.x = gameW + RandomNumberGenerator.getRandIntBetween(index * gameW / 3, (index + 1) * gameW / 3);
             isPassed = false;
         }
 

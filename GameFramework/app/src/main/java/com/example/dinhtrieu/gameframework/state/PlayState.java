@@ -28,6 +28,7 @@ public class PlayState extends State {
     private UILabel labelScore;
     private int score;
     private boolean isGameOver;
+    private UIButton pauseButton;
 
     @Override
     public void init() {
@@ -36,11 +37,12 @@ public class PlayState extends State {
         labelScore = new UILabel("0", GameMainActivity.GAME_WIDTH / 2 - 6, 150);
         gameBackground = new GameBackground(GameMainActivity.GAME_WIDTH, GameMainActivity.GAME_HEIGHT);
         player = new Player(40, 760, 180, 180);
+        pauseButton = new UIButton(GameMainActivity.GAME_WIDTH - 200, 50, GameMainActivity.GAME_WIDTH - 100, 150, Assets.pauseButton, Assets.pauseTouchButton);
 
         cactusList = new ArrayList<>();
 
         for (int i = 0; i < 3; ++i) {
-            Cactus cactus = new Cactus(760, 200, 200);
+            Cactus cactus = new Cactus(760, 200, 200, i);
             cactusList.add(cactus);
         }
     }
@@ -66,6 +68,7 @@ public class PlayState extends State {
     @Override
     public void render(Painter g) {
         drawBackground(g);
+        pauseButton.render(g, true);
 
         for (Cactus cactus : cactusList) {
             cactus.render(g);
@@ -76,14 +79,38 @@ public class PlayState extends State {
     }
 
     @Override
+    public void onPause() {
+
+    }
+
+    @Override
+    public void onResume() {
+
+    }
+
+    @Override
     public void load() {
     }
 
     @Override
     public boolean onTouch(MotionEvent e, int scaledX, int scaledY) {
-        player.onTouch(e, scaledX, scaledY);
-        Assets.playSound(Assets.pointSoundId);
-        return false;
+        if (e.getAction() == MotionEvent.ACTION_DOWN) {
+            pauseButton.onTouchDown(scaledX, scaledY);
+
+            if (!pauseButton.isButtonDown()) {
+                player.onTouch(e, scaledX, scaledY);
+                Assets.playSound(Assets.pointSoundId);
+            }
+        }
+
+        if (e.getAction() == MotionEvent.ACTION_UP) {
+            if (pauseButton.isPressed(scaledX, scaledY)) {
+                pauseButton.cancel();
+                setPauseGame();
+            }
+        }
+
+        return true;
     }
 
     //Feature

@@ -15,7 +15,7 @@ public class GameBackground {
     private int width;
     private int height;
     private boolean reversedFirst;
-    public static final float speed = 1200;
+    public static final float speed = 1600;
 
     private int xClip;
 

@@ -51,5 +51,8 @@ public class UIButton {
         return buttonDown && buttonRect.contains(touchX, touchY);
     }
 
+    public boolean isButtonDown() {
+        return buttonDown;
+    }
 }
 

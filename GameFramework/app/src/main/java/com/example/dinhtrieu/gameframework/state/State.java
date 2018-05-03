@@ -12,6 +12,14 @@ public abstract class State {
         GameMainActivity.sGame.setCurrentState(newState);
     }
 
+    public void setPauseGame() {
+        GameMainActivity.sGame.setPause();
+    }
+
+    public void setResumeGame(){
+        GameMainActivity.sGame.setResume();
+    }
+
     public abstract void init();
 
     public abstract void update(float delta);

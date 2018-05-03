@@ -1,6 +1,8 @@
 package com.example.dinhtrieu.gameframework.model;
 
 import android.graphics.Rect;
+import android.nfc.Tag;
+import android.util.Log;
 import android.view.MotionEvent;
 
 public class Player {
@@ -8,11 +10,12 @@ public class Player {
     private int width, height, velY;
     private Rect rect;
     private float yGround;
+    private int pressedCount;
 
     private boolean isAlive;
     private boolean isDucked;
 
-    private static final int JUMP_VELOCITY = -600;
+    private static final int JUMP_VELOCITY = -800;
     private static final int ACCEL_GRAVITY = 1800;
 
     public Player(float x, float y, int width, int height) {
@@ -26,11 +29,13 @@ public class Player {
 
         rect = new Rect((int) x, (int) y, (int) (x + width), (int) (y + height));
         yGround = y + height;
+        pressedCount = 0;
     }
 
     public void update(float delta) {
         if (isGrounded()) {
             velY = 0;
+            pressedCount = 0;
         } else {
             velY += ACCEL_GRAVITY * delta;
         }
@@ -43,6 +48,11 @@ public class Player {
         if (isGrounded()) {
             y -= 300;
             velY = JUMP_VELOCITY;
+            pressedCount++;
+        } else if (pressedCount <= 2) {
+            y -= 100;
+            velY += JUMP_VELOCITY / 3;
+            pressedCount++;
         }
     }
 
