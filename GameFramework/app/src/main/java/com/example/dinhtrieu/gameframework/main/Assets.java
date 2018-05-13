@@ -32,7 +32,7 @@ public class Assets {
 
     public static Bitmap menuBackground, gamebackground, gameloadingbackground, gameoverbackground, cactus, menuboard, winMenuboard;
     public static Bitmap continueButton, quitButton, pauseButton, pauseTouchButton, playButton, exitButton, resumeButton,
-            restartButton, newgamebutton, savescorebutton, savebutton;
+            restartButton, newgamebutton, savescorebutton, savebutton, changepassbutton, highscorebutton;
     public static LoopingAnimation animation;
 
     public static int hitSoundId = -1, wingSoundId = -1, pointSoundId = -1;
@@ -59,7 +59,8 @@ public class Assets {
         newgamebutton = Assets.loadBitmap("new_game_button.png", true);
         savescorebutton = Assets.loadBitmap("save_score_button.png", true);
         savebutton = Assets.loadBitmap("save_button.png", true);
-
+        changepassbutton = Assets.loadBitmap("changepass_button.png", true);
+        highscorebutton = Assets.loadBitmap("score_button.png", true);
 
         typeface = Typeface.create( Typeface.createFromAsset(GameMainActivity.assets, "fonts/pixel.TTF"), Typeface.BOLD);
 

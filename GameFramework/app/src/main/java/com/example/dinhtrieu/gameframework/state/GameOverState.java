@@ -65,6 +65,7 @@ public class GameOverState extends State {
                 setCurrentState(new MenuState());
             } else if (savescoreButton.isPressed(scaledX, scaledY)) {
                 GameMainActivity.saveHighScore(playerScore);
+                saveScore(playerScore);
                 savescoreButton.cancel();
                 setCurrentState(new MenuState());
             }

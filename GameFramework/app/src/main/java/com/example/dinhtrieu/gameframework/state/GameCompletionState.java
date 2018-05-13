@@ -15,6 +15,7 @@ public class GameCompletionState extends State {
     private int score;
 
     public GameCompletionState(int score) {
+        saveScore(score);
         this.score = score;
         init();
     }

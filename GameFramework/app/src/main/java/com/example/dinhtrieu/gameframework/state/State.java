@@ -1,5 +1,6 @@
 package com.example.dinhtrieu.gameframework.state;
 
+import android.app.Activity;
 import android.graphics.Paint;
 import android.view.MotionEvent;
 
@@ -11,6 +12,12 @@ public abstract class State {
     public void setCurrentState(State newState) {
         GameMainActivity.sGame.setCurrentState(newState);
     }
+
+    public void startNewActivity() {
+        GameMainActivity.sGame.startNewActivity();
+    }
+
+    public void saveScore(int score) { GameMainActivity.sGame.saveScore(score); }
 
     public void setPauseGame() {
         GameMainActivity.sGame.setPause();

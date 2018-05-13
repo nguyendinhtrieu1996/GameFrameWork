@@ -1,6 +1,8 @@
 package com.example.dinhtrieu.gameframework.main;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
@@ -8,12 +10,16 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.example.dinhtrieu.gameframework.network.HttpSaveScore;
 import com.example.dinhtrieu.gameframework.state.LoadState;
 import com.example.dinhtrieu.gameframework.state.MenuState;
 import com.example.dinhtrieu.gameframework.state.PauseState;
 import com.example.dinhtrieu.gameframework.state.State;
 import com.example.dinhtrieu.gameframework.util.InputHandler;
 import com.example.dinhtrieu.gameframework.util.Painter;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class GameView extends SurfaceView implements Runnable {
 
@@ -22,7 +28,9 @@ public class GameView extends SurfaceView implements Runnable {
     private Rect gameImageDst;
     private Canvas gameCanvas;
     public Painter graphics;
+    private Context context;
 
+    private HttpSaveScore httpSaveScore;
     private final String TAG = "GameView";
     private Thread gameThread;
     private volatile boolean running = false;
@@ -35,6 +43,7 @@ public class GameView extends SurfaceView implements Runnable {
 
     public GameView(Context context, int gameWidth, int gameHeight) {
         super(context);
+        this.context = context;
         gameImage = Bitmap.createBitmap(gameWidth, gameHeight, Bitmap.Config.RGB_565);
         gameImageSrc = new Rect(0, 0, gameImage.getWidth(), gameImage.getHeight());
         gameImageDst = new Rect();
@@ -66,6 +75,18 @@ public class GameView extends SurfaceView implements Runnable {
 
     public GameView(Context context) {
         super(context);
+    }
+
+    public void startNewActivity() {
+        Intent intent = new Intent(context, SettingActivity.class);
+        context.startActivity(intent);
+    }
+
+    public void saveScore(int score) {
+        Map<String, String> params = new HashMap<>();
+        params.put("Score1", score + "");
+        httpSaveScore = new HttpSaveScore(params, context);
+        httpSaveScore.execute();
     }
 
     //PAUSE AND RESUME GAME

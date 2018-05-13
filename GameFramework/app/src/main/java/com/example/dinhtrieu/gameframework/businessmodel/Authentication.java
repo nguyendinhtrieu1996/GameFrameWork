@@ -40,4 +40,9 @@ public class Authentication {
         return preferences.getString(key, null);
     }
 
+    public void logout(Context context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        preferences.edit().remove(key).commit();
+    }
+
 }
