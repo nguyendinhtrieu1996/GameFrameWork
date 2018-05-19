@@ -49,7 +49,7 @@ public class ChangePassDialog extends DialogFragment {
                         String newP = edtNewPass.getText().toString();
                         String confirmNewP = edtConfirmNewPass.getText().toString();
 
-                        if (currentPass.equals("") || newP.equals("") || confirmNewP.equals("") || newP.equals(confirmNewP)) {
+                        if (currentPass.equals("") || newP.equals("") || confirmNewP.equals("") || !newP.equals(confirmNewP)) {
                             return;
                         }
 
